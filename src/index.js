@@ -9,7 +9,12 @@ const PORT = process.env.PORT || 4000;
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://drive-front-one.vercel.app/"
+    ]
+}));
 app.use(express.json());
 
 app.use("/empresa", empresaRoutes);
