@@ -35,7 +35,7 @@ router.post("/crear", requireAuth, async (req, res) => {
         await supabaseAdmin.auth.admin.inviteUserByEmail(
             usuario_email,
             {
-            redirectTo: "http://localhost:5173/reset-password",
+            redirectTo: "https://drive-front-one.vercel.app/reset-password",
             }
         );
         if (inviteError) throw inviteError;
