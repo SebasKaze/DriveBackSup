@@ -18,26 +18,23 @@ const app = express();
 
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin) return callback(null, true); // permitir Postman/curl
+        if (!origin) return callback(null, true);
 
         if (allowedOrigins.includes(origin)) {
-        callback(null, true);
+        return callback(null, true);
         } else {
-        callback(new Error("No permitido por CORS"));
+        return callback(new Error("Not allowed by CORS"));
         }
     },
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
-
-// 👇 IMPORTANTE: manejar preflight explícitamente
-app.options("*", cors());
-
 
 app.use(express.json());
 
 app.use("/empresa", empresaRoutes);
 
-app.listen(4000, () =>
+app.listen(PORT, () =>
     console.log(`🚀 API corriendo en puerto ${PORT}`)
 );
