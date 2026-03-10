@@ -10,7 +10,9 @@ const PORT = process.env.PORT || 4000;
 
 const allowedOrigins = [
     "http://localhost:5173",
-    "https://drive-front-ced3yhihl-sebaskazes-projects.vercel.app"
+    "https://drive-front-ced3yhihl-sebaskazes-projects.vercel.app",
+    "https://www.cmbdrive.com",
+    "https://cmbdrive.com"
 ];
 
 
@@ -20,12 +22,14 @@ app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
 
-    // Permitir localhost
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
     if (origin.startsWith("http://localhost")) {
       return callback(null, true);
     }
 
-    // Permitir cualquier subdominio vercel.app
     if (origin.endsWith(".vercel.app")) {
       return callback(null, true);
     }
@@ -36,7 +40,6 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
-
 
 app.use(express.json());
 
